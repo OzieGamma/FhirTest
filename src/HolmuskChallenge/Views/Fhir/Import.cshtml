@@ -6,7 +6,7 @@
 
 <h2>Import</h2>
 
-<form asp-action="Create" asp-controller="Patient">
+<form asp-action="Create" asp-controller="Patient" asp-route-returnurl="@ViewData["ReturnUrl"]">
     <div class="form-horizontal">
         <h4>Patient</h4>
         <hr />
@@ -17,6 +17,7 @@
             <label asp-for="GivenName" class="col-md-2 control-label"></label>
             <div class="col-md-10">
                 <input asp-for="GivenName" class="form-control" disabled/>
+                <input asp-for="GivenName" class="form-control" type="hidden" id="GivenName-hidden"/>
                 <span asp-validation-for="GivenName" class="text-danger" />
             </div>
         </div>
@@ -26,6 +27,7 @@
             <label asp-for="FamilyName" class="col-md-2 control-label"></label>
             <div class="col-md-10">
                 <input asp-for="FamilyName" class="form-control" disabled/>
+                <input asp-for="FamilyName" class="form-control" type="hidden" id="FamilyName-hidden" />
                 <span asp-validation-for="FamilyName" class="text-danger" />
             </div>
         </div>
@@ -35,6 +37,7 @@
             <label asp-for="Gender" class="col-md-2 control-label"></label>
             <div class="col-md-10">
                 <select asp-for="Gender" class="form-control" asp-items="new SelectList(Enum.GetNames(typeof(Gender)))" disabled></select>
+                <input asp-for="Gender" class="form-control" type="hidden" id="Gender-hidden" />
                 <span asp-validation-for="Gender" class="text-danger" />
             </div>
         </div>
@@ -44,6 +47,7 @@
             <label asp-for="DateOfBirth" class="col-md-2 control-label"></label>
             <div class="col-md-10">
                 <input asp-for="DateOfBirth" class="form-control" disabled/>
+                <input asp-for="DateOfBirth" class="form-control" type="hidden" id="DateOfBirth-hidden" />
                 <span asp-validation-for="DateOfBirth" class="text-danger" />
             </div>
         </div>
@@ -53,6 +57,7 @@
             <label asp-for="Comments" class="col-md-2 control-label"></label>
             <div class="col-md-10">
                 <input asp-for="Comments" class="form-control" disabled/>
+                <input asp-for="Comments" class="form-control" type="hidden" id="Comments-hidden" />
                 <span asp-validation-for="Comments" class="text-danger" />
             </div>
         </div>

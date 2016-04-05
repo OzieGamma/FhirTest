@@ -46,7 +46,12 @@ namespace HolmuskChallenge.Controllers
         [HttpGet]
         public ViewResult Import(Patient patient)
         {
+            bool valid = this.ModelState.IsValid;
+            this.ViewData["ReturnUrl"] = this.Url.Action("ImportSuccessfull");
             return View();
         }
+
+        [HttpGet]
+        public ViewResult ImportSuccessful() => View();
     }
 }

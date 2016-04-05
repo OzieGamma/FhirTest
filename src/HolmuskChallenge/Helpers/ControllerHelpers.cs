@@ -15,13 +15,15 @@ namespace HolmuskChallenge.Helpers
 {
     public static class ControllerHelpers
     {
-        public static IActionResult RedirectToLocal(this Controller controller, string returnUrl)
+        public static string ForceLocal(this Controller controller, string url)
         {
-            if (controller.Url.IsLocalUrl(returnUrl))
+            if (controller.Url.IsLocalUrl(url))
             {
-                return controller.Redirect(returnUrl);
+                return url;
             }
-            return controller.RedirectToAction(nameof(HomeController.Index), "Home");
+            return controller.Url.Action(nameof(HomeController.Index), "Home");
         }
+
+        public static IActionResult RedirectToLocal(this Controller controller, string url) => new RedirectResult(ForceLocal(controller, url));
     }
 }
