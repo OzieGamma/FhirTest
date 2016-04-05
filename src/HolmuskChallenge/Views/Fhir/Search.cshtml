@@ -61,7 +61,12 @@
                 @Html.DisplayFor(modelItem => item.Comments)
             </td>
             <td>
-                <a asp-action="Import" asp-route-givenname="@item.GivenName">Edit</a>
+                <a asp-action="Import" 
+                   asp-route-givenname="@item.GivenName"
+                   asp-route-familyname="@item.FamilyName"
+                   asp-route-gender="@item.Gender"
+                   asp-route-dateofbirth="@item.DateOfBirth"
+                   asp-route-comments="@item.Comments">Import</a>
             </td>
         </tr>
     }
