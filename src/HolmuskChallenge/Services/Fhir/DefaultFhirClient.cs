@@ -45,7 +45,8 @@ namespace HolmuskChallenge.Services.Fhir
                     ? Gender.Male
                     : fhirPatient.Gender == AdministrativeGender.Female
                         ? Gender.Female
-                        : Gender.Other
+                        : Gender.Other,
+                Comments = string.Join(Environment.NewLine, fhirPatient.FhirComments)
             };
         }
 
