@@ -1,0 +1,39 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{1CE3470F-ABE6-407D-ACD6-61AC2D27FF96}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{4447AE17-D7EF-4C01-BC0E-A3F67EB3BAC4}"
+	ProjectSection(SolutionItems) = preProject
+		global.json = global.json
+	EndProjectSection
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "HolmuskChallenge", "src\HolmuskChallenge\HolmuskChallenge.xproj", "{04065AE4-57E3-4D70-ABA1-E93E6314923C}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "HolmuskChallenge.Test", "test\HolmuskChallenge.Test\HolmuskChallenge.Test.xproj", "{1AC66230-24C7-4F33-9FE1-1526CD13FC59}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{04065AE4-57E3-4D70-ABA1-E93E6314923C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{04065AE4-57E3-4D70-ABA1-E93E6314923C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{04065AE4-57E3-4D70-ABA1-E93E6314923C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{04065AE4-57E3-4D70-ABA1-E93E6314923C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1AC66230-24C7-4F33-9FE1-1526CD13FC59}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1AC66230-24C7-4F33-9FE1-1526CD13FC59}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1AC66230-24C7-4F33-9FE1-1526CD13FC59}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1AC66230-24C7-4F33-9FE1-1526CD13FC59}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{04065AE4-57E3-4D70-ABA1-E93E6314923C} = {1CE3470F-ABE6-407D-ACD6-61AC2D27FF96}
+		{1AC66230-24C7-4F33-9FE1-1526CD13FC59} = {1CE3470F-ABE6-407D-ACD6-61AC2D27FF96}
+	EndGlobalSection
+EndGlobal

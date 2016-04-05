@@ -1,0 +1,74 @@
+@model SearchViewModel
+
+@{
+    ViewData["Title"] = "Search";
+}
+
+<h2>Search</h2>
+
+<form asp-action="Search" asp-antiforgery="false" method="get">
+    <div asp-validation-summary="ValidationSummary.ModelOnly" class="text-danger"></div>
+
+    <!-- Search name -->
+    <label asp-for="Query.Name" class="col-md-2 control-label"></label>
+    <div class="col-md-4">
+        <input asp-for="Query.Name" class="form-control" placeholder="eg. Smith"/>
+        <span asp-validation-for="Query.Name" class="text-danger"></span>
+    </div>
+
+    <div class="col-md-2">
+        <input type="submit" value="Search" class="btn btn-default"/>
+    </div>
+</form>
+
+@{ var dummy = Model.Patients.FirstOrDefault(); }
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => dummy.GivenName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => dummy.FamilyName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => dummy.Gender)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => dummy.DateOfBirth)
+        </th><th>
+            @Html.DisplayNameFor(model => dummy.Comments)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (SearchViewModel.PatientViewModel item in Model.Patients)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.GivenName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FamilyName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Gender)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateOfBirth)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Comments)
+            </td>
+            <td>
+                <a asp-action="Import" asp-route-givenname="@item.GivenName">Edit</a>
+            </td>
+        </tr>
+    }
+</table>
+
+@section Scripts {
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+}

@@ -1,0 +1,23 @@
+﻿{
+  "version": "1.0.0-*",
+  "description": "HolmuskChallenge Test project",
+  "authors": [ "Oswald MASKENS" ],
+  "tags": [ "" ],
+  "projectUrl": "",
+  "licenseUrl": "",
+
+  "dependencies": {
+    "xunit": "2.1.0",
+    "xunit.runner.dnx": "2.1.0-rc1-build204",
+    "HolmuskChallenge": "1.0.0-*",
+    "EntityFramework.InMemory": "7.0.0-rc1-final",
+    "NSubstitute": "1.10.0",
+    "FluentAssertions": "4.2.2"
+  },
+  "commands": {
+    "test": "xunit.runner.dnx"
+  },
+  "frameworks": {
+    "dnx451": { }
+  }
+}

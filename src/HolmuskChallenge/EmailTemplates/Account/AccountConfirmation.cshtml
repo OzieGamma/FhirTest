@@ -1,0 +1,6 @@
+﻿@{
+    Layout = "~/EmailTemplates/Shared/_Layout";
+}
+@model HolmuskChallenge.EmailModels.Account.AccountConfirmation
+
+Please confirm your account by clicking this link: <a href="@Model.ConfirmationLink">link</a>
