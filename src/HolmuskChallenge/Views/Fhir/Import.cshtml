@@ -1,4 +1,3 @@
-@using System.Web.ModelBinding
 @model Patient
 
 @{
@@ -7,7 +6,7 @@
 
 <h2>Import</h2>
 
-<form asp-action="Import">
+<form asp-action="Create" asp-controller="Patient">
     <div class="form-horizontal">
         <h4>Patient</h4>
         <hr />
@@ -17,7 +16,7 @@
         <div class="form-group">
             <label asp-for="GivenName" class="col-md-2 control-label"></label>
             <div class="col-md-10">
-                <input asp-for="GivenName" class="form-control" />
+                <input asp-for="GivenName" class="form-control" disabled/>
                 <span asp-validation-for="GivenName" class="text-danger" />
             </div>
         </div>
@@ -26,7 +25,7 @@
         <div class="form-group">
             <label asp-for="FamilyName" class="col-md-2 control-label"></label>
             <div class="col-md-10">
-                <input asp-for="FamilyName" class="form-control" />
+                <input asp-for="FamilyName" class="form-control" disabled/>
                 <span asp-validation-for="FamilyName" class="text-danger" />
             </div>
         </div>
@@ -35,7 +34,7 @@
         <div class="form-group">
             <label asp-for="Gender" class="col-md-2 control-label"></label>
             <div class="col-md-10">
-                <select asp-for="Gender" class="form-control" asp-items="new SelectList(Enum.GetNames(typeof(Gender)))"></select>
+                <select asp-for="Gender" class="form-control" asp-items="new SelectList(Enum.GetNames(typeof(Gender)))" disabled></select>
                 <span asp-validation-for="Gender" class="text-danger" />
             </div>
         </div>
@@ -44,7 +43,7 @@
         <div class="form-group">
             <label asp-for="DateOfBirth" class="col-md-2 control-label"></label>
             <div class="col-md-10">
-                <input asp-for="DateOfBirth" class="form-control" />
+                <input asp-for="DateOfBirth" class="form-control" disabled/>
                 <span asp-validation-for="DateOfBirth" class="text-danger" />
             </div>
         </div>
@@ -53,7 +52,7 @@
         <div class="form-group">
             <label asp-for="Comments" class="col-md-2 control-label"></label>
             <div class="col-md-10">
-                <input asp-for="Comments" class="form-control" enabled="false"/>
+                <input asp-for="Comments" class="form-control" disabled/>
                 <span asp-validation-for="Comments" class="text-danger" />
             </div>
         </div>
@@ -70,7 +69,7 @@
 </form>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Search">Back to search</a>
 </div>
 
 @section Scripts {
