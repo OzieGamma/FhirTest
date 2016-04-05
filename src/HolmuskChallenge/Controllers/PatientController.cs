@@ -10,6 +10,7 @@
 
 using System.Linq;
 using System.Threading.Tasks;
+using HolmuskChallenge.Helpers;
 using HolmuskChallenge.Models;
 using Microsoft.AspNet.Authorization;
 using Microsoft.AspNet.Mvc;
@@ -53,19 +54,20 @@ namespace HolmuskChallenge.Controllers
         // GET: Patient/Create
         public IActionResult Create()
         {
+            this.ViewData["ReturnUrl"] = this.Url.Action("Index");
             return View();
         }
 
         // POST: Patient/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Patient patient)
+        public async Task<IActionResult> Create(Patient patient, string returnUrl = null)
         {
             if (this.ModelState.IsValid)
             {
                 _context.Patients.Add(patient);
                 await _context.SaveChangesAsync();
-                return RedirectToAction("Index");
+                return this.RedirectToLocal(returnUrl);
             }
 
             return View(patient);

@@ -10,6 +10,7 @@
 
 using System.Threading.Tasks;
 using HolmuskChallenge.EmailModels.Account;
+using HolmuskChallenge.Helpers;
 using HolmuskChallenge.Models;
 using HolmuskChallenge.Services.Email;
 using HolmuskChallenge.ViewModels.Account;
@@ -64,7 +65,7 @@ namespace HolmuskChallenge.Controllers
                 if (result.Succeeded)
                 {
                     _logger.LogInformation(1, "User logged in.");
-                    return RedirectToLocal(returnUrl);
+                    return this.RedirectToLocal(returnUrl);
                 }
                 if (result.IsLockedOut)
                 {
@@ -244,15 +245,6 @@ namespace HolmuskChallenge.Controllers
             {
                 this.ModelState.AddModelError(string.Empty, error.Description);
             }
-        }
-
-        private IActionResult RedirectToLocal(string returnUrl)
-        {
-            if (this.Url.IsLocalUrl(returnUrl))
-            {
-                return Redirect(returnUrl);
-            }
-            return RedirectToAction(nameof(HomeController.Index), "Home");
         }
 
         #endregion
