@@ -23,12 +23,12 @@ namespace HolmuskChallenge.Models
 
         [Required]
         [StringLength(255, MinimumLength = 1, ErrorMessage = "The first name should be at least 1 and maximum 255 characters long")]
-        [Display(Name = "First name")]
+        [Display(Name = "Given name")]
         public string GivenName { get; set; }
 
         [Required]
         [StringLength(255, MinimumLength = 1, ErrorMessage = "The last name should be at least 1 and maximum 255 characters long")]
-        [Display(Name = "Last name")]
+        [Display(Name = "Family name")]
         public string FamilyName { get; set; }
 
         [Required]

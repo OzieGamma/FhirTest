@@ -11,7 +11,6 @@
 using System.Linq;
 using System.Threading.Tasks;
 using HolmuskChallenge.Models;
-using HolmuskChallenge.ViewModels;
 using Microsoft.AspNet.Authorization;
 using Microsoft.AspNet.Mvc;
 using Microsoft.Data.Entity;
@@ -42,7 +41,7 @@ namespace HolmuskChallenge.Controllers
                 return HttpNotFound();
             }
 
-            var patientInfo = await _context.Patients.Where(_ => _.Deleted == false).SingleAsync(m => m.Id == id);
+            Patient patientInfo = await _context.Patients.Where(_ => _.Deleted == false).SingleAsync(m => m.Id == id);
             if (patientInfo == null)
             {
                 return HttpNotFound();
@@ -68,7 +67,7 @@ namespace HolmuskChallenge.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            
+
             return View(patient);
         }
 
@@ -80,7 +79,7 @@ namespace HolmuskChallenge.Controllers
                 return HttpNotFound();
             }
 
-            var patientInfo = await _context.Patients.Where(_ => _.Deleted == false).SingleAsync(m => m.Id == id);
+            Patient patientInfo = await _context.Patients.Where(_ => _.Deleted == false).SingleAsync(m => m.Id == id);
             if (patientInfo == null)
             {
                 return HttpNotFound();
@@ -111,7 +110,7 @@ namespace HolmuskChallenge.Controllers
                 return HttpNotFound();
             }
 
-            var patientInfo = await _context.Patients.Where(_ => _.Deleted == false).SingleAsync(m => m.Id == id);
+            Patient patientInfo = await _context.Patients.Where(_ => _.Deleted == false).SingleAsync(m => m.Id == id);
             if (patientInfo == null)
             {
                 return HttpNotFound();
@@ -125,7 +124,7 @@ namespace HolmuskChallenge.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(long id)
         {
-            var patientInfo = await _context.Patients.SingleAsync(m => m.Id == id);
+            Patient patientInfo = await _context.Patients.SingleAsync(m => m.Id == id);
             _context.Patients.Remove(patientInfo);
             await _context.SaveChangesAsync();
             return RedirectToAction("Index");
