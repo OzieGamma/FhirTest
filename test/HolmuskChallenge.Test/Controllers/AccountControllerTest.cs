@@ -42,6 +42,8 @@ namespace HolmuskChallenge.Test.Controllers
 
         private const string JhonValidEmail = "jhon@example.com";
         private const string JhonValidPassword = "Password!0";
+        private const string JhonValidPassword2 = "Password!2";
+        private const string JhonInValidPassword = "abcd";
 
         public AccountControllerTest()
         {
@@ -94,13 +96,28 @@ namespace HolmuskChallenge.Test.Controllers
             {
                 Url = Substitute.For<IUrlHelper>()
             };
-            controller.Url.IsLocalUrl(Arg.Any<string>()).Returns(false);
+            controller.Url.IsLocalUrl(Arg.Any<string>()).Returns(true);
 
             // Act
-            var result = await controller.Login(new LoginViewModel {Email = JhonValidEmail, Password = JhonValidPassword});
+            var result = await controller.Login(new LoginViewModel {Email = JhonValidEmail, Password = JhonValidPassword}, "https://localurl.url");
 
             // Assert
-            result.Should().BeOfType<RedirectToActionResult>();
+            result.Should().BeOfType<RedirectResult>();
+        }
+
+        [Fact]
+        public async Task RegisterShouldRedisplayTheFormIfModelIsInvalid()
+        {
+            // Arrange
+            var controller = new AccountController(this.UserManager, this.SignInManager, Substitute.For<ITemplatedEmailSender>(), Substitute.For<ILoggerFactory>());
+            controller.ModelState.AddModelError("wrong", "model");
+
+
+            // Act
+            var result = await controller.Register(new RegisterViewModel());
+
+            // Assert
+            result.Should().BeOfType<ViewResult>();
         }
     }
 
