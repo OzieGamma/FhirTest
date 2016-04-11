@@ -13,8 +13,17 @@ using Microsoft.AspNet.Mvc;
 
 namespace HolmuskChallenge.Helpers
 {
+    /// <summary>
+    /// Contains helpers methods for ASP.NET MVC Core 1 <see cref="Controller"/>.
+    /// </summary>
     public static class ControllerHelpers
     {
+        /// <summary>
+        /// Forces an Url to be local.
+        /// </summary>
+        /// <param name="controller">The <see cref="Controller"/> to extend.</param>
+        /// <param name="url">The url to test.</param>
+        /// <returns>The url if it's local, otherwise a link to the home page.</returns>
         public static string ForceLocal(this Controller controller, string url)
         {
             if (controller.Url.IsLocalUrl(url))
@@ -24,6 +33,11 @@ namespace HolmuskChallenge.Helpers
             return controller.Url.Action(nameof(HomeController.Index), "Home");
         }
 
+        /// <summary>
+        /// Creates an <see cref="RedirectResult"/> based on <see cref="ForceLocal"/>
+        /// </summary>
+        /// <param name="controller">The <see cref="Controller"/> to extend.</param>
+        /// <param name="url">The url to used (if local).</param>
         public static IActionResult RedirectToLocal(this Controller controller, string url) => new RedirectResult(ForceLocal(controller, url));
     }
 }

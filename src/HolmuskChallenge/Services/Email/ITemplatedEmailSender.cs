@@ -12,6 +12,9 @@ using System.Threading.Tasks;
 
 namespace HolmuskChallenge.Services.Email
 {
+    /// <summary>
+    /// Sends emails, using templates. Eg. Razor engine.
+    /// </summary>
     public interface ITemplatedEmailSender
     {
         Task SendEmailAsync(string template, string email, string subject, object model);

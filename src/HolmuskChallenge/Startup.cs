@@ -16,6 +16,7 @@ using HolmuskChallenge.Services.Fhir;
 using Microsoft.AspNet.Builder;
 using Microsoft.AspNet.Hosting;
 using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNet.Mvc;
 using Microsoft.Data.Entity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -58,6 +59,11 @@ namespace HolmuskChallenge
 
 
             services.AddMvc();
+
+            services.Configure<MvcOptions>(options =>
+            {
+                options.Filters.Add(new RequireHttpsAttribute());
+            });
 
             // Add application services.
             services.Configure<SendGridConfig>(this.Configuration.GetSection("SendGrid"));

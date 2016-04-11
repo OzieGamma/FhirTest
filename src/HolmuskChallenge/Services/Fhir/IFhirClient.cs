@@ -13,9 +13,22 @@ using HolmuskChallenge.ViewModels.Fhir;
 
 namespace HolmuskChallenge.Services.Fhir
 {
+    /// <summary>
+    /// A client to access a <see href="https://www.hl7.org/fhir/">FHIR</see> server.
+    /// </summary>
     public interface IFhirClient
     {
+        /// <summary>
+        /// Searches a patient based on his/her name.
+        /// </summary>
+        /// <param name="name">The name of the patient.</param>
+        /// <returns>The patients matching the search query.</returns>
         IEnumerable<SearchViewModel.PatientViewModel> SearchPatientByNameAsync(string name);
+
+        /// <summary>
+        /// Gets patients from the FHIR server without any search query.
+        /// </summary>
+        /// <returns>The first patients returned by the server.</returns>
         IEnumerable<SearchViewModel.PatientViewModel> SearchAny();
     }
 }

@@ -17,8 +17,7 @@ using SendGrid;
 namespace HolmuskChallenge.Services.Email
 {
     /// <summary>
-    /// Sends an email using the sendgrid service.
-    /// https://sendgrid.com/
+    /// Sends an email using the <see href="https://sendgrid.com/">sendgrid service</see>.
     /// </summary>
     public class SendgridEmailSender : IEmailSender
     {
@@ -35,7 +34,7 @@ namespace HolmuskChallenge.Services.Email
         {
             await _sendGridApi.DeliverAsync(new SendGridMessage
             {
-                From = _sendGridSettings.NoReply,
+                From = _sendGridSettings.From,
                 To = new[] {new MailAddress(email)},
                 Subject = subject,
                 Html = message

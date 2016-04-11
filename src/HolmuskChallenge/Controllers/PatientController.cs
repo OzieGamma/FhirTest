@@ -18,6 +18,9 @@ using Microsoft.Data.Entity;
 
 namespace HolmuskChallenge.Controllers
 {
+    /// <summary>
+    /// Handels the CRUD operations for a <see cref="Patient" />
+    /// </summary>
     [Authorize]
     public class PatientController : Controller
     {
@@ -28,13 +31,18 @@ namespace HolmuskChallenge.Controllers
             _context = context;
         }
 
-        // GET: Patient
+        /// <summary>
+        /// Displays a list of <see cref="Patient" />
+        /// </summary>
         public async Task<IActionResult> Index()
         {
             return View(await _context.Patients.Where(_ => _.Deleted == false).ToListAsync());
         }
 
-        // GET: Patient/Details/5
+        /// <summary>
+        /// Displays the details of 1 <see cref="Patient" />
+        /// </summary>
+        /// <param name="id">The id of the <see cref="Patient" /> to display.</param>
         public async Task<IActionResult> Details(long? id)
         {
             if (id == null)
@@ -51,14 +59,21 @@ namespace HolmuskChallenge.Controllers
             return View(patientInfo);
         }
 
-        // GET: Patient/Create
+        /// <summary>
+        /// Displays the Create view for a  <see cref="Patient" />
+        /// </summary>
         public IActionResult Create()
         {
             this.ViewData["ReturnUrl"] = this.Url.Action("Index");
             return View();
         }
 
-        // POST: Patient/Create
+        /// <summary>
+        /// Creates a  <see cref="Patient" /> if the passed Model is valid. 
+        /// Otherwise redisplays the create form.
+        /// </summary>
+        /// <param name="patient">The <see cref="Patient"/> to create.</param>
+        /// <param name="returnUrl">The url to redirect to once the <see cref="Patient"/> was created.</param>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Patient patient, string returnUrl = null)
@@ -73,7 +88,10 @@ namespace HolmuskChallenge.Controllers
             return View(patient);
         }
 
-        // GET: Patient/Edit/5
+        /// <summary>
+        /// Displays the Edit view for a <see cref="Patient" />.
+        /// </summary>
+        /// <param name="id">The id of the <see cref="Patient" /> to edit.</param>
         public async Task<IActionResult> Edit(long? id)
         {
             if (id == null)
@@ -89,7 +107,10 @@ namespace HolmuskChallenge.Controllers
             return View(patientInfo);
         }
 
-        // POST: Patient/Edit/5
+        /// <summary>
+        /// Edits a <see cref="Patient" /> and redirct to the list of Patients. <see cref="Index" />
+        /// </summary>
+        /// <param name="patient">The edited <see cref="Patient" />.</param>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Patient patient)
@@ -103,7 +124,10 @@ namespace HolmuskChallenge.Controllers
             return View(patient);
         }
 
-        // GET: Patient/Delete/5
+        /// <summary>
+        /// Displays a confirmation page for deleting a <see cref="Patient" />.
+        /// </summary>
+        /// <param name="id">The id of the <see cref="Patient" /> to delete.</param>
         [ActionName("Delete")]
         public async Task<IActionResult> Delete(long? id)
         {
@@ -121,7 +145,10 @@ namespace HolmuskChallenge.Controllers
             return View(patientInfo);
         }
 
-        // POST: Patient/Delete/5
+        /// <summary>
+        /// Deletes a <see cref="Patient" /> and redirects to the list of <see cref="Patient" />. <see cref="Index"/>
+        /// </summary>
+        /// <param name="id">The id of the <see cref="Patient" /> to delete.</param>
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(long id)

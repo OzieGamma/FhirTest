@@ -17,6 +17,9 @@ using Microsoft.AspNet.Mvc;
 
 namespace HolmuskChallenge.Controllers
 {
+    /// <summary>
+    /// Controller for the fhir search functionality. Let's you import data from a FHIR server.
+    /// </summary>
     [Authorize]
     public class FhirController : Controller
     {
@@ -27,6 +30,10 @@ namespace HolmuskChallenge.Controllers
             _fhirClient = fhirClientFactory.NewClient(new Uri("http://nprogram.azurewebsites.net/"));
         }
 
+        /// <summary>
+        /// Displays a list of patients gotten from the FHIR server.
+        /// </summary>
+        /// <param name="query">If provided, filter the search using this query.</param>
         [HttpGet]
         public ViewResult Search([FromQuery] SearchViewModel.QueryViewModel query)
         {
@@ -43,6 +50,11 @@ namespace HolmuskChallenge.Controllers
             return View(new SearchViewModel {Query = query, Patients = patients});
         }
 
+        /// <summary>
+        /// Displays a summary and confirmation before importingg the patient.
+        /// The actual import is POSTed to <see cref="Controller.Create(Patient, string)" />
+        /// </summary>
+        /// <param name="patient">The patient to confim import of.</param>
         [HttpGet]
         public ViewResult Import(Patient patient)
         {
@@ -51,6 +63,9 @@ namespace HolmuskChallenge.Controllers
             return View();
         }
 
+        /// <summary>
+        /// Displays a confirmation that the import was successfull.
+        /// </summary>
         [HttpGet]
         public ViewResult ImportSuccessful() => View();
     }

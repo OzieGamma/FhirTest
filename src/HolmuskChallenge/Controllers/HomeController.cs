@@ -14,6 +14,9 @@ namespace HolmuskChallenge.Controllers
 {
     public class HomeController : Controller
     {
+        /// <summary>
+        /// Simply redirects to the patient controller for now.
+        /// </summary>
         public IActionResult Index() => RedirectToAction(nameof(PatientController.Index), "Patient");
 
         public IActionResult Error()

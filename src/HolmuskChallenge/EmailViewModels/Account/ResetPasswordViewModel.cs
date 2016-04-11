@@ -1,4 +1,4 @@
-﻿// <copyright company="Oswald MASKENS" file="ResetPassword.cs">
+﻿// <copyright company="Oswald MASKENS" file="ResetPasswordViewModel.cs">
 // Copyright 2014-2016 Oswald MASKENS
 // 
 // Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
@@ -10,9 +10,12 @@
 
 using System.ComponentModel.DataAnnotations;
 
-namespace HolmuskChallenge.EmailModels.Account
+namespace HolmuskChallenge.EmailViewModels.Account
 {
-    public class ResetPassword
+    /// <summary>
+    /// View model for the reset password email.
+    /// </summary>
+    public class ResetPasswordViewModel
     {
         [Required]
         [Url]

@@ -12,11 +12,29 @@ using System.Net.Mail;
 
 namespace HolmuskChallenge.Config
 {
+    /// <summary>
+    /// Respresent the configuration of a <see href="https://sendgrid.com">SendGrid Account</see>
+    /// </summary>
     public class SendGridConfig
     {
+        /// <summary>
+        /// The <see href="https://sendgrid.com/docs/User_Guide/Settings/api_keys.html">SendGrid Api Key</see>
+        /// </summary>
         public string Key { get; set; }
-        public string NoReplyEmail { get; set; }
-        public string NoReplyName { get; set; }
-        public MailAddress NoReply => new MailAddress(this.NoReplyEmail, this.NoReplyName);
+
+        /// <summary>
+        /// The email address used to send emails. 
+        /// </summary>
+        public string FromEmail { get; set; }
+
+        /// <summary>
+        /// The name used to send email.
+        /// </summary>
+        public string FromName { get; set; }
+
+        /// <summary>
+        /// Gets the <see cref="MailAddress"/> buildt using <see cref="FromEmail"/> and <see cref="FromName"/>.
+        /// </summary>
+        public MailAddress From => new MailAddress(this.FromEmail, this.FromName);
     }
 }

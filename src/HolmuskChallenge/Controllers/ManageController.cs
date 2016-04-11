@@ -16,7 +16,6 @@ using Microsoft.AspNet.Authorization;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Mvc;
 using Microsoft.Extensions.Logging;
-using Microsoft.AspNet.Identity;
 
 namespace HolmuskChallenge.Controllers
 {
@@ -37,7 +36,6 @@ namespace HolmuskChallenge.Controllers
             _logger = loggerFactory.CreateLogger<ManageController>();
         }
 
-        // GET: /Manage/Index
         [HttpGet]
         public IActionResult Index(ManageMessageId? message = null)
         {
@@ -51,14 +49,12 @@ namespace HolmuskChallenge.Controllers
             return View();
         }
 
-        // GET: /Manage/ChangePassword
         [HttpGet]
         public IActionResult ChangePassword()
         {
             return View();
         }
 
-        // POST: /Manage/ChangePassword
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ChangePassword(ChangePasswordViewModel model)

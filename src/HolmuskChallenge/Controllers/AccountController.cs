@@ -9,7 +9,7 @@
 // </copyright>
 
 using System.Threading.Tasks;
-using HolmuskChallenge.EmailModels.Account;
+using HolmuskChallenge.EmailViewModels.Account;
 using HolmuskChallenge.Helpers;
 using HolmuskChallenge.Models;
 using HolmuskChallenge.Services.Email;
@@ -18,6 +18,7 @@ using Microsoft.AspNet.Authorization;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Mvc;
 using Microsoft.Extensions.Logging;
+using ResetPasswordViewModel = HolmuskChallenge.EmailViewModels.Account.ResetPasswordViewModel;
 
 namespace HolmuskChallenge.Controllers
 {
@@ -41,7 +42,6 @@ namespace HolmuskChallenge.Controllers
             _logger = loggerFactory.CreateLogger<AccountController>();
         }
 
-        // GET: /Account/Login
         [HttpGet]
         [AllowAnonymous]
         public IActionResult Login(string returnUrl = null)
@@ -50,7 +50,6 @@ namespace HolmuskChallenge.Controllers
             return View();
         }
 
-        // POST: /Account/Login
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -61,7 +60,7 @@ namespace HolmuskChallenge.Controllers
             {
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-                var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
+                SignInResult result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
                 if (result.Succeeded)
                 {
                     _logger.LogInformation(1, "User logged in.");
@@ -80,7 +79,6 @@ namespace HolmuskChallenge.Controllers
             return View(model);
         }
 
-        // GET: /Account/Register
         [HttpGet]
         [AllowAnonymous]
         public IActionResult Register()
@@ -88,7 +86,6 @@ namespace HolmuskChallenge.Controllers
             return View();
         }
 
-        // POST: /Account/Register
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -97,16 +94,16 @@ namespace HolmuskChallenge.Controllers
             if (this.ModelState.IsValid)
             {
                 var user = new ApplicationUser {UserName = model.Email, Email = model.Email};
-                var result = await _userManager.CreateAsync(user, model.Password);
+                IdentityResult result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
                     // Send an email with this link
-                    var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                    var callbackUrl = this.Url.Action("ConfirmEmail", "Account", new {userId = user.Id, code},
-                        this.HttpContext.Request.Scheme);
+                    string code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                    string callbackUrl =
+                        this.Url.Action("ConfirmEmail", "Account", new {userId = user.Id, code}, this.HttpContext.Request.Scheme);
 
-                    await _emailSender.SendEmailAsync("AccountConfirmation", model.Email,
-                        "Confirm your account", new AccountConfirmation {ConfirmationLink = callbackUrl});
+                    await _emailSender.SendEmailAsync("AccountConfirmationViewModel", model.Email, "Confirm your account",
+                        new AccountConfirmationViewModel {ConfirmationLink = callbackUrl});
 
                     await _signInManager.SignInAsync(user, false);
 
@@ -120,7 +117,6 @@ namespace HolmuskChallenge.Controllers
             return View(model);
         }
 
-        // POST: /Account/LogOff
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> LogOff()
@@ -130,7 +126,6 @@ namespace HolmuskChallenge.Controllers
             return RedirectToAction(nameof(HomeController.Index), "Home");
         }
 
-        // GET: /Account/ConfirmEmail
         [HttpGet]
         [AllowAnonymous]
         public async Task<IActionResult> ConfirmEmail(string userId, string code)
@@ -139,16 +134,15 @@ namespace HolmuskChallenge.Controllers
             {
                 return View("Error");
             }
-            var user = await _userManager.FindByIdAsync(userId);
+            ApplicationUser user = await _userManager.FindByIdAsync(userId);
             if (user == null)
             {
                 return View("Error");
             }
-            var result = await _userManager.ConfirmEmailAsync(user, code);
+            IdentityResult result = await _userManager.ConfirmEmailAsync(user, code);
             return View(result.Succeeded ? "ConfirmEmail" : "Error");
         }
 
-        // GET: /Account/ForgotPassword
         [HttpGet]
         [AllowAnonymous]
         public IActionResult ForgotPassword()
@@ -156,7 +150,6 @@ namespace HolmuskChallenge.Controllers
             return View();
         }
 
-        // POST: /Account/ForgotPassword
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -164,7 +157,7 @@ namespace HolmuskChallenge.Controllers
         {
             if (this.ModelState.IsValid)
             {
-                var user = await _userManager.FindByNameAsync(model.Email);
+                ApplicationUser user = await _userManager.FindByNameAsync(model.Email);
                 if ((user == null) || !await _userManager.IsEmailConfirmedAsync(user))
                 {
                     // Don't reveal that the user does not exist or is not confirmed
@@ -172,11 +165,11 @@ namespace HolmuskChallenge.Controllers
                 }
 
                 // Send an email with this link
-                var code = await _userManager.GeneratePasswordResetTokenAsync(user);
-                var callbackUrl = this.Url.Action("ResetPassword", "Account", new {userId = user.Id, code},
+                string code = await _userManager.GeneratePasswordResetTokenAsync(user);
+                string callbackUrl = this.Url.Action("ResetPasswordViewModel", "Account", new {userId = user.Id, code},
                     this.HttpContext.Request.Scheme);
-                await _emailSender.SendEmailAsync("ResetPassword", model.Email,
-                    "Reset Password", new ResetPassword {ResetLink = callbackUrl});
+                await _emailSender.SendEmailAsync("ResetPasswordViewModel", model.Email,
+                    "Reset Password", new ResetPasswordViewModel {ResetLink = callbackUrl});
 
                 return View("ForgotPasswordConfirmation");
             }
@@ -185,7 +178,6 @@ namespace HolmuskChallenge.Controllers
             return View(model);
         }
 
-        // GET: /Account/ForgotPasswordConfirmation
         [HttpGet]
         [AllowAnonymous]
         public IActionResult ForgotPasswordConfirmation()
@@ -193,7 +185,6 @@ namespace HolmuskChallenge.Controllers
             return View();
         }
 
-        // GET: /Account/ResetPassword
         [HttpGet]
         [AllowAnonymous]
         public IActionResult ResetPassword(string code = null)
@@ -201,25 +192,24 @@ namespace HolmuskChallenge.Controllers
             return code == null ? View("Error") : View();
         }
 
-        // POST: /Account/ResetPassword
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> ResetPassword(ResetPasswordViewModel model)
+        public async Task<IActionResult> ResetPassword(ViewModels.Account.ResetPasswordViewModel model)
         {
             if (!this.ModelState.IsValid)
             {
                 return View(model);
             }
 
-            var user = await _userManager.FindByNameAsync(model.Email);
+            ApplicationUser user = await _userManager.FindByNameAsync(model.Email);
             if (user == null)
             {
                 // Don't reveal that the user does not exist
                 return RedirectToAction(nameof(ResetPasswordConfirmation), "Account");
             }
 
-            var result = await _userManager.ResetPasswordAsync(user, model.Code, model.Password);
+            IdentityResult result = await _userManager.ResetPasswordAsync(user, model.Code, model.Password);
             if (result.Succeeded)
             {
                 return RedirectToAction(nameof(ResetPasswordConfirmation), "Account");
@@ -229,7 +219,6 @@ namespace HolmuskChallenge.Controllers
             return View();
         }
 
-        // GET: /Account/ResetPasswordConfirmation
         [HttpGet]
         [AllowAnonymous]
         public IActionResult ResetPasswordConfirmation()
@@ -241,7 +230,7 @@ namespace HolmuskChallenge.Controllers
 
         private void AddErrors(IdentityResult result)
         {
-            foreach (var error in result.Errors)
+            foreach (IdentityError error in result.Errors)
             {
                 this.ModelState.AddModelError(string.Empty, error.Description);
             }

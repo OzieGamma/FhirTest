@@ -12,8 +12,16 @@ using System;
 
 namespace HolmuskChallenge.Services.Fhir
 {
+    /// <summary>
+    /// A factory for <see cref="IFhirClient"/>
+    /// </summary>
     public interface IFhirClientFactory
     {
+        /// <summary>
+        /// Creates a <see cref="IFhirClient"/> based on an endpoint.
+        /// </summary>
+        /// <param name="endPoint">The FHIR server to use.</param>
+        /// <returns>The created client.</returns>
         IFhirClient NewClient(Uri endPoint);
     }
 }
